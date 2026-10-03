@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GurBuilding — Official Luxury Real Estate</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        :root {
+            --bg-main: #0a0b0d;
+            --bg-card: #121418;
+            --gold: #c5a059;
+            --gold-light: #e5c07b;
+            --text-white: #ffffff;
+            --text-muted: #8a8f99;
+            --border-gold: rgba(197, 160, 89, 0.3);
+            --font-title: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(10,11,13,0.9), transparent);
+            transition: 0.4s;
+        }
+
+        header.scrolled {
+            background: rgba(10, 11, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-gold);
+            padding: 15px 5%;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 26px;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 300;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+
+        .header-btn {
+            border: 1px solid var(--gold);
+            padding: 10px 22px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .header-btn:hover {
+            background: var(--gold);
+            color: var(--bg-main);
+        }
+
+        /* HERO SECTION WITH VIDEO BACKGROUND */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.4);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 40%, var(--bg-main) 100%);
+            z-index: -1;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-title);
+            font-size: 80px;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        /* SECTION STYLES */
+        section {
+            padding: 120px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-title);
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* THREE PILLARS */
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            padding: 50px 30px;
+            text-align: center;
+            transition: 0.4s;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+        }
+
+        .pillar-card h3 {
+            font-family: var(--font-title);
+            font-size: 28px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .pillar-card p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* PROJECTS SLIDER */
+        .swiper-slide {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            overflow: hidden;
+        }
+
+        .slide-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .swiper-slide:hover .slide-img {
+            transform: scale(1.05);
+        }
+
+        .slide-content {
+            padding: 30px;
+        }
+
+        .slide-content h3 {
+            font-family: var(--font-title);
+            font-size: 32px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .slide-content p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border-gold);
+            padding: 60px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #050607;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-content h1 { font-size: 42px; }
+            .pillars { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="#" class="logo">GurBuilding</a>
+        <nav>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#residences">Residences</a></li>
+                <li><a href="#retreats">Retreats</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="#contact" class="header-btn">Enquire Now</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-architecture-41551-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Four Walls. Countless Moments.</h1>
+            <p>A Home Built the Way You Always Imagined</p>
+            <a href="#residences" class="header-btn" style="padding: 15px 35px; font-size: 11px;">Explore Residences</a>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section id="about">
+        <div class="section-title">
+            <h2>The GurBuilding Standard</h2>
+            <p>Quality is not a feature, it is the foundation</p>
+        </div>
+        <div class="pillars">
+            <div class="pillar-card">
+                <h3>Crafted</h3>
+                <p>Meticulously designed layouts, hand-picked eco-friendly materials, and world-class architectural finishing that stands the test of time.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>Connected</h3>
+                <p>Located in Tashkent’s premier districts with seamless access to elite education, central business hubs, and fine dining.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>Complete</h3>
+                <p>Private gated living, round-the-clock concierge, underground parking, and dedicated green parks inside the residency.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Residences Slider -->
+    <section id="residences" style="background: #08090b;">
+        <div class="section-title">
+            <h2>Curated Residences</h2>
+            <p>Exclusive Living Spaces</p>
+        </div>
+        
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80" class="slide-img">
+                    <div class="slide-content">
+                        <h3>GurBuilding / Grand Residence</h3>
+                        <p>Central District • High Ceilings 3.3m • VRV Climate Control</p>
+                        <a href="#contact" class="header-btn">Request Details</a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" class="slide-img">
+                    <div class="slide-content">
+                        <h3>GurBuilding / Nature Retreats</h3>
+                        <p>Suburban Luxury • Private Villas • Waterfront Views</p>
+                        <a href="#contact" class="header-btn">Request Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div>© 2026 GurBuilding / Emarat Realty Style Copy. All Rights Reserved.</div>
+        <div>Tashkent, Uzbekistan | +998 (71) 000-00-00</div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize Swiper
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                }
+            }
+        });
+    </script>
+</body>
+</html>
