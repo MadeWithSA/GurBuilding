@@ -1,384 +1,946 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GurBuilding — Official Luxury Real Estate</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <title>GurBuilding | Luxury Residences & Architecture</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Playfair Display & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0b1120',
+                        slateDark: '#0f172a',
+                        gold: {
+                            light: '#e6ca65',
+                            DEFAULT: '#c5a059',
+                            dark: '#9a7b38',
+                            amber: '#d4af37'
+                        },
+                        sand: '#fcfbf7',
+                        cardDark: '#1e293b'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-main: #0a0b0d;
-            --bg-card: #121418;
-            --gold: #c5a059;
-            --gold-light: #e5c07b;
-            --text-white: #ffffff;
-            --text-muted: #8a8f99;
-            --border-gold: rgba(197, 160, 89, 0.3);
-            --font-title: 'Cormorant Garamond', serif;
-            --font-body: 'Montserrat', sans-serif;
+        /* Custom Custom Scrollbar and Glassmorphism Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            outline: none;
+        ::-webkit-scrollbar-track {
+            background: #0b1120;
         }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-white);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+        ::-webkit-scrollbar-thumb {
+            background: #c5a059;
+            border-radius: 4px;
         }
-
-        /* HEADER */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: linear-gradient(to bottom, rgba(10,11,13,0.9), transparent);
-            transition: 0.4s;
+        .glass-header {
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-
-        header.scrolled {
-            background: rgba(10, 11, 13, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-gold);
-            padding: 15px 5%;
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(197, 160, 89, 0.2);
         }
-
-        .logo {
-            font-family: var(--font-title);
-            font-size: 26px;
-            letter-spacing: 4px;
-            color: var(--gold);
-            text-transform: uppercase;
-            text-decoration: none;
-            font-weight: 600;
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f3e7be 0%, #c5a059 50%, #9a7b38 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav ul li a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 300;
-            transition: 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--gold);
-        }
-
-        .header-btn {
-            border: 1px solid var(--gold);
-            padding: 10px 22px;
-            color: var(--gold);
-            text-transform: uppercase;
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .header-btn:hover {
-            background: var(--gold);
-            color: var(--bg-main);
-        }
-
-        /* HERO SECTION WITH VIDEO BACKGROUND */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            filter: brightness(0.4);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, transparent 40%, var(--bg-main) 100%);
-            z-index: -1;
-        }
-
-        .hero-content h1 {
-            font-family: var(--font-title);
-            font-size: 80px;
-            font-weight: 300;
-            font-style: italic;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        .hero-content p {
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 40px;
-        }
-
-        /* SECTION STYLES */
-        section {
-            padding: 120px 8%;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title h2 {
-            font-family: var(--font-title);
-            font-size: 48px;
-            font-weight: 400;
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: var(--text-muted);
-            font-size: 13px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* THREE PILLARS */
-        .pillars {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .pillar-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-gold);
-            padding: 50px 30px;
-            text-align: center;
-            transition: 0.4s;
-        }
-
-        .pillar-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-        }
-
-        .pillar-card h3 {
-            font-family: var(--font-title);
-            font-size: 28px;
-            color: var(--gold);
-            margin-bottom: 20px;
-            font-weight: 400;
-        }
-
-        .pillar-card p {
-            color: var(--text-muted);
-            font-size: 13px;
-            line-height: 1.8;
-            font-weight: 300;
-        }
-
-        /* PROJECTS SLIDER */
-        .swiper-slide {
-            background: var(--bg-card);
-            border: 1px solid var(--border-gold);
-            overflow: hidden;
-        }
-
-        .slide-img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .swiper-slide:hover .slide-img {
-            transform: scale(1.05);
-        }
-
-        .slide-content {
-            padding: 30px;
-        }
-
-        .slide-content h3 {
-            font-family: var(--font-title);
-            font-size: 32px;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .slide-content p {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        /* FOOTER */
-        footer {
-            border-top: 1px solid var(--border-gold);
-            padding: 60px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #050607;
-            font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 900px) {
-            .hero-content h1 { font-size: 42px; }
-            .pillars { grid-template-columns: 1fr; }
-            nav { display: none; }
+        .gold-border-glow:hover {
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.25);
+            border-color: rgba(197, 160, 89, 0.6);
         }
     </style>
 </head>
-<body>
+<body class="bg-obsidian text-slate-100 font-sans antialiased selection:bg-gold selection:text-obsidian">
 
-    <!-- Header -->
-    <header id="header">
-        <a href="#" class="logo">GurBuilding</a>
-        <nav>
-            <ul>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#residences">Residences</a></li>
-                <li><a href="#retreats">Retreats</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <a href="#contact" class="header-btn">Enquire Now</a>
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-header border-b border-gold/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 border border-gold/40 rounded-full flex items-center justify-center bg-gold/5 group-hover:border-gold transition-colors">
+                    <i data-lucide="building-2" class="w-5 h-5 text-gold"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl font-bold tracking-wider text-white group-hover:text-gold transition-colors">GurBuilding</span>
+                    <span class="text-[9px] tracking-[0.25em] text-gold/70 uppercase">Emarat Concept</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#about" class="hover:text-gold transition-colors" data-i18n="nav.about">О застройщике</a>
+                <a href="#standards" class="hover:text-gold transition-colors" data-i18n="nav.standards">Стандарты</a>
+                <a href="#residences" class="hover:text-gold transition-colors" data-i18n="nav.residences">Резиденции</a>
+                <a href="#calculator" class="hover:text-gold transition-colors" data-i18n="nav.calculator">Ипотека</a>
+                <a href="#contact" class="hover:text-gold transition-colors" data-i18n="nav.contact">Контакты</a>
+            </nav>
+
+            <!-- Actions & Lang Switcher -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Toggle Button -->
+                <div class="bg-slate-800/80 p-1 rounded-full border border-gold/20 flex items-center">
+                    <button id="lang-ru" onclick="switchLanguage('ru')" class="px-3 py-1 text-xs rounded-full font-semibold transition-all bg-gold text-obsidian shadow-sm">
+                        RU
+                    </button>
+                    <button id="lang-uz" onclick="switchLanguage('uz')" class="px-3 py-1 text-xs rounded-full font-semibold transition-all text-slate-400 hover:text-white">
+                        UZ
+                    </button>
+                </div>
+
+                <!-- Call Button -->
+                <button onclick="openModal('callback-modal')" class="hidden sm:flex items-center gap-2 border border-gold/50 text-gold hover:bg-gold hover:text-obsidian px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300">
+                    <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                    <span data-i18n="nav.callback">Заказать звонок</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white p-2">
+                    <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-obsidian/95 border-b border-gold/20 px-6 py-6 space-y-4">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-lg hover:text-gold" data-i18n="nav.about">О застройщике</a>
+            <a href="#standards" onclick="toggleMobileMenu()" class="block text-lg hover:text-gold" data-i18n="nav.standards">Стандарты</a>
+            <a href="#residences" onclick="toggleMobileMenu()" class="block text-lg hover:text-gold" data-i18n="nav.residences">Резиденции</a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block text-lg hover:text-gold" data-i18n="nav.calculator">Ипотека</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-lg hover:text-gold" data-i18n="nav.contact">Контакты</a>
+            <button onclick="toggleMobileMenu(); openModal('callback-modal')" class="w-full mt-4 flex items-center justify-center gap-2 border border-gold text-gold py-3 rounded-full text-sm font-semibold uppercase">
+                <i data-lucide="phone-call" class="w-4 h-4"></i>
+                <span data-i18n="nav.callback">Заказать звонок</span>
+            </button>
+        </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-architecture-41551-large.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Four Walls. Countless Moments.</h1>
-            <p>A Home Built the Way You Always Imagined</p>
-            <a href="#residences" class="header-btn" style="padding: 15px 35px; font-size: 11px;">Explore Residences</a>
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=85" 
+                 alt="GurBuilding Architecture" 
+                 class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-10000"
+                 id="hero-bg-img">
+            <div class="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/60"></div>
         </div>
-    </section>
 
-    <!-- Philosophy -->
-    <section id="about">
-        <div class="section-title">
-            <h2>The GurBuilding Standard</h2>
-            <p>Quality is not a feature, it is the foundation</p>
-        </div>
-        <div class="pillars">
-            <div class="pillar-card">
-                <h3>Crafted</h3>
-                <p>Meticulously designed layouts, hand-picked eco-friendly materials, and world-class architectural finishing that stands the test of time.</p>
-            </div>
-            <div class="pillar-card">
-                <h3>Connected</h3>
-                <p>Located in Tashkent’s premier districts with seamless access to elite education, central business hubs, and fine dining.</p>
-            </div>
-            <div class="pillar-card">
-                <h3>Complete</h3>
-                <p>Private gated living, round-the-clock concierge, underground parking, and dedicated green parks inside the residency.</p>
-            </div>
-        </div>
-    </section>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-12">
+            <div class="max-w-3xl space-y-8">
+                <!-- Tagline Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs tracking-widest uppercase font-semibold backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                    <span data-i18n="hero.tag">Премиальная недвижимость • Ташкент</span>
+                </div>
 
-    <!-- Residences Slider -->
-    <section id="residences" style="background: #08090b;">
-        <div class="section-title">
-            <h2>Curated Residences</h2>
-            <p>Exclusive Living Spaces</p>
-        </div>
-        
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80" class="slide-img">
-                    <div class="slide-content">
-                        <h3>GurBuilding / Grand Residence</h3>
-                        <p>Central District • High Ceilings 3.3m • VRV Climate Control</p>
-                        <a href="#contact" class="header-btn">Request Details</a>
+                <!-- Main Hero Title -->
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal leading-tight text-white">
+                    <span data-i18n="hero.title_part1">Четыре стены.</span><br>
+                    <span class="italic font-serif gold-gradient-text" data-i18n="hero.title_part2">Бесконечные мгновения.</span>
+                </h1>
+
+                <!-- Hero Subtitle -->
+                <p class="text-base sm:text-xl text-slate-300 font-light leading-relaxed max-w-2xl" data-i18n="hero.subtitle">
+                    Праздники, семейные вечера и тишина после рабочего дня — лучшие моменты жизни происходят дома. В GurBuilding мы создаем пространство, где эстетика встречается с инженерным совершенством.
+                </p>
+
+                <!-- Key Specs Grid Badges -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-800/80">
+                    <div>
+                        <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="hero.badge1_label">Потолки</div>
+                        <div class="text-lg font-semibold text-white mt-1">3.30 м</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="hero.badge2_label">Рассрочка</div>
+                        <div class="text-lg font-semibold text-gold mt-1" data-i18n="hero.badge2_val">0% до 24 мес</div>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="hero.badge3_label">Срок сдачи</div>
+                        <div class="text-lg font-semibold text-white mt-1" data-i18n="hero.badge3_val">IV Квартал 2026</div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" class="slide-img">
-                    <div class="slide-content">
-                        <h3>GurBuilding / Nature Retreats</h3>
-                        <p>Suburban Luxury • Private Villas • Waterfront Views</p>
-                        <a href="#contact" class="header-btn">Request Details</a>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                    <a href="#residences" class="bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-obsidian px-8 py-4 rounded-full text-sm font-bold tracking-wider uppercase text-center transition-all duration-300 shadow-lg shadow-gold/20 flex items-center justify-center gap-2">
+                        <span data-i18n="hero.cta_primary">Выбрать резиденцию</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <button onclick="openModal('catalog-modal')" class="border border-slate-600 hover:border-gold text-slate-200 hover:text-gold px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase text-center transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span data-i18n="hero.cta_secondary">Скачать каталог (PDF)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & 3 Core Pillars -->
+    <section id="standards" class="py-24 bg-slateDark relative border-t border-gold/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold" data-i18n="standards.section_tag">Философия качества</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-white font-normal" data-i18n="standards.title">
+                    Дом, созданный именно таким, каким вы его представляли
+                </h2>
+                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
+            </div>
+
+            <!-- 3 Pillars Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="glass-card p-8 rounded-2xl gold-border-glow transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="sparkles" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-3" data-i18n="pillar1.title">Мастерство & Детали</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed" data-i18n="pillar1.desc">
+                            Утонченная отделка общественных зон, бесшумные премиальные лифты, увеличенные оконные проемы и продуманная шумоизоляция. Каждая резиденция GurBuilding — это баланс стиля и практичности.
+                        </p>
                     </div>
+                    <div class="mt-8 pt-4 border-t border-slate-800 text-xs font-semibold text-gold tracking-widest uppercase" data-i18n="pillar1.sub">Crafted with Excellence</div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-card p-8 rounded-2xl gold-border-glow transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="map-pin" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-3" data-i18n="pillar2.title">Идеальная локация</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed" data-i18n="pillar2.desc">
+                            Удобный выезд на ключевые магистрали Ташкента, близкое расположение лучших международный школ, деловых центров и парковых зон для комфортной жизни.
+                        </p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-slate-800 text-xs font-semibold text-gold tracking-widest uppercase" data-i18n="pillar2.sub">Seamless Connectivity</div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-card p-8 rounded-2xl gold-border-glow transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="shield-check" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-3" data-i18n="pillar3.title">Безопасная экосистема</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed" data-i18n="pillar3.desc">
+                            Приватный закрытый двор без автомобилей, подземный паркинг с лифтом прямо до вашего этажа, видеонаблюдение 24/7 и персональный консьерж-сервис.
+                        </p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-slate-800 text-xs font-semibold text-gold tracking-widest uppercase" data-i18n="pillar3.sub">Complete Peace of Mind</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Featured Residences Showcase -->
+    <section id="residences" class="py-24 bg-obsidian relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div class="space-y-3">
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold" data-i18n="residences.tag">Коллекция жилья</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl text-white font-normal" data-i18n="residences.title">Выбор резиденции</h2>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0">
+                    <button onclick="filterResidences('all')" class="filter-btn active-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border border-gold bg-gold text-obsidian" data-category="all" data-i18n="filter.all">Все</button>
+                    <button onclick="filterResidences('city')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border border-slate-700 text-slate-300 hover:border-gold hover:text-gold" data-category="city" data-i18n="filter.city">City Residence</button>
+                    <button onclick="filterResidences('retreats')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border border-slate-700 text-slate-300 hover:border-gold hover:text-gold" data-category="retreats" data-i18n="filter.retreats">Nature Retreats</button>
+                    <button onclick="filterResidences('penthouse')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border border-slate-700 text-slate-300 hover:border-gold hover:text-gold" data-category="penthouse" data-i18n="filter.penthouse">Пентхаусы</button>
+                </div>
+            </div>
+
+            <!-- Residences Grid -->
+            <div id="residences-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cards will be dynamically loaded via JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mortgage & Installment Interactive Calculator -->
+    <section id="calculator" class="py-24 bg-slateDark border-t border-b border-gold/10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column Text -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold" data-i18n="calc.tag">Финансовый калькулятор</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-white font-normal" data-i18n="calc.title">
+                        Рассчитайте условия вашей рассрочки или ипотеки
+                    </h2>
+                    <p class="text-slate-400 text-sm leading-relaxed" data-i18n="calc.desc">
+                        Мы предлагаем прозрачные финансовые инструменты: беспроцентную рассрочку от застройщика до 24 месяцев или выгодную ипотеку от банков-партнеров.
+                    </p>
+
+                    <div class="p-4 rounded-xl bg-gold/5 border border-gold/20 flex items-start gap-4">
+                        <i data-lucide="info" class="w-6 h-6 text-gold shrink-0 mt-0.5"></i>
+                        <p class="text-xs text-slate-300 leading-relaxed" data-i18n="calc.notice">
+                            Расчет является предварительным. Персональные скидки и акционные условия рассчитываются менеджером отдела продаж.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column Interactive Inputs -->
+                <div class="lg:col-span-7 glass-card p-6 sm:p-10 rounded-2xl border border-gold/30">
+                    <div class="space-y-6">
+                        
+                        <!-- Property Price Slider -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm font-medium">
+                                <span class="text-slate-300" data-i18n="calc.label_price">Стоимость недвижимости</span>
+                                <span class="text-gold font-semibold" id="val-price">$ 85,000</span>
+                            </div>
+                            <input type="range" id="input-price" min="45000" max="300000" step="5000" value="85000" 
+                                   class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-gold"
+                                   oninput="calculateMortgage()">
+                            <div class="flex justify-between text-[10px] text-slate-500">
+                                <span>$ 45,000</span>
+                                <span>$ 300,000</span>
+                            </div>
+                        </div>
+
+                        <!-- Down Payment Slider -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm font-medium">
+                                <span class="text-slate-300" data-i18n="calc.label_down">Первоначальный взнос</span>
+                                <span class="text-gold font-semibold"><span id="val-down-percent">30</span>% (<span id="val-down-amount">$ 25,500</span>)</span>
+                            </div>
+                            <input type="range" id="input-down" min="20" max="70" step="5" value="30" 
+                                   class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-gold"
+                                   oninput="calculateMortgage()">
+                        </div>
+
+                        <!-- Term Slider -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm font-medium">
+                                <span class="text-slate-300" data-i18n="calc.label_term">Срок рассрочки / ипотеки</span>
+                                <span class="text-gold font-semibold"><span id="val-term">24</span> <span data-i18n="calc.months">мес.</span></span>
+                            </div>
+                            <input type="range" id="input-term" min="6" max="36" step="6" value="24" 
+                                   class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-gold"
+                                   oninput="calculateMortgage()">
+                        </div>
+
+                        <!-- Calculation Results Box -->
+                        <div class="mt-8 p-6 rounded-xl bg-obsidian border border-gold/20 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="calc.monthly_payment">Ежемесячный платеж</div>
+                                <div class="text-2xl font-serif text-gold font-bold mt-1" id="res-monthly">$ 2,479</div>
+                                <div class="text-[11px] text-slate-500 mt-1" id="res-monthly-uzs">~ 31,500,000 UZS</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400 uppercase tracking-wider" data-i18n="calc.total_financed">Сумма рассрочки</div>
+                                <div class="text-2xl font-serif text-white font-semibold mt-1" id="res-financed">$ 59,500</div>
+                                <div class="text-[11px] text-slate-500 mt-1" data-i18n="calc.zero_percent">0% Первоначальная переплата</div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Offer Button -->
+                        <button onclick="openModal('callback-modal')" class="w-full py-4 rounded-full bg-gold text-obsidian font-bold text-xs uppercase tracking-widest hover:bg-gold-light transition-all shadow-lg shadow-gold/10">
+                            <span data-i18n="calc.get_plan">Зафиксировать условия и получить консультацию</span>
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lead Contact Section -->
+    <section id="contact" class="py-24 bg-obsidian relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-8 sm:p-14 border border-gold/30 relative overflow-hidden">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+                    
+                    <div class="space-y-6">
+                        <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold" data-i18n="contact.tag">Офис продаж</span>
+                        <h2 class="font-serif text-3xl sm:text-5xl text-white font-normal leading-tight" data-i18n="contact.title">
+                            Прикоснитесь к качеству GurBuilding
+                        </h2>
+                        <p class="text-slate-300 text-sm leading-relaxed" data-i18n="contact.desc">
+                            Запишитесь на приватную презентацию в нашем шоуруме. Наш эксперт подробно расскажет о доступных планировках, инфраструктуре и спецпредложениях.
+                        </p>
+
+                        <div class="space-y-4 pt-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-400" data-i18n="contact.address_label">Адрес офиса</div>
+                                    <div class="text-sm font-semibold text-white" data-i18n="contact.address_val">г. Ташкент, Мирабадский р-н, ул. Афросиаб 12A</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+                                    <i data-lucide="phone" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-400" data-i18n="contact.phone_label">Единый отдел продаж</div>
+                                    <div class="text-sm font-semibold text-white">+998 (71) 200-00-00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-4 bg-obsidian/80 p-6 sm:p-8 rounded-2xl border border-slate-800">
+                        <h3 class="font-serif text-xl text-white mb-2" data-i18n="form.title">Оставить заявку</h3>
+                        
+                        <div>
+                            <label class="block text-xs uppercase text-slate-400 mb-1" data-i18n="form.name_label">Ваше имя</label>
+                            <input type="text" required placeholder="Александр" 
+                                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase text-slate-400 mb-1" data-i18n="form.phone_label">Номер телефона</label>
+                            <input type="tel" required placeholder="+998 90 123 45 67" 
+                                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase text-slate-400 mb-1" data-i18n="form.project_label">Интересующий проект</label>
+                            <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold transition-colors">
+                                <option value="city" data-i18n="form.opt_city">GurBuilding City Residence</option>
+                                <option value="nature" data-i18n="form.opt_nature">GurBuilding Nature Retreats</option>
+                                <option value="penthouse" data-i18n="form.opt_penthouse">GurBuilding Penthouse Collection</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-gold to-gold-dark text-obsidian rounded-lg font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity mt-2">
+                            <span data-i18n="form.submit">Получить индивидуальное предложение</span>
+                        </button>
+                        
+                        <p class="text-[10px] text-slate-500 text-center" data-i18n="form.privacy">
+                            Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
+                        </p>
+                    </form>
+
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div>© 2026 GurBuilding / Emarat Realty Style Copy. All Rights Reserved.</div>
-        <div>Tashkent, Uzbekistan | +998 (71) 000-00-00</div>
+    <footer class="bg-obsidian border-t border-gold/10 py-12 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-800 pb-8">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 border border-gold/40 rounded-full flex items-center justify-center bg-gold/5">
+                        <i data-lucide="building-2" class="w-4 h-4 text-gold"></i>
+                    </div>
+                    <span class="font-serif text-xl font-bold text-white tracking-wider">GurBuilding</span>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 text-xs text-slate-400">
+                    <a href="#about" class="hover:text-gold" data-i18n="nav.about">О застройщике</a>
+                    <a href="#residences" class="hover:text-gold" data-i18n="nav.residences">Резиденции</a>
+                    <a href="#calculator" class="hover:text-gold" data-i18n="nav.calculator">Ипотека</a>
+                    <a href="#contact" class="hover:text-gold" data-i18n="nav.contact">Контакты</a>
+                </div>
+
+                <div class="flex space-x-4 text-gold">
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:border-gold transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:border-gold transition-colors"><i data-lucide="send" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:border-gold transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+                <p>© 2026 GurBuilding / Emarat Realty Concept. All rights reserved.</p>
+                <p data-i18n="footer.dev">Developed for Uzbekistan Luxury Real Estate Market</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        // Header scroll behavior
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+    <!-- Callback Modal -->
+    <div id="callback-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-2xl relative border border-gold/40">
+            <button onclick="closeModal('callback-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 class="font-serif text-2xl text-white mb-2" data-i18n="modal.callback_title">Заказать звонок</h3>
+            <p class="text-xs text-slate-400 mb-6" data-i18n="modal.callback_sub">Оставьте ваши данные и наш эксперт свяжется с вами в течение 10 минут.</p>
+            
+            <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <input type="text" required placeholder="Имя" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                <input type="tel" required placeholder="+998 __ ___ __ __" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                <button type="submit" class="w-full py-3.5 bg-gold text-obsidian font-bold text-xs uppercase tracking-widest rounded-lg hover:bg-gold-light">
+                    <span data-i18n="modal.btn_send">Отправить</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
-        // Initialize Swiper
-        const swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            breakpoints: {
-                768: {
-                    slidesPerView: 2,
-                }
+    <!-- Catalog PDF Modal -->
+    <div id="catalog-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-2xl relative border border-gold/40 text-center">
+            <button onclick="closeModal('catalog-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="w-16 h-16 bg-gold/10 rounded-full border border-gold/30 flex items-center justify-center text-gold mx-auto mb-4">
+                <i data-lucide="file-text" class="w-8 h-8"></i>
+            </div>
+            <h3 class="font-serif text-2xl text-white mb-2" data-i18n="modal.catalog_title">Скачать каталог 2026</h3>
+            <p class="text-xs text-slate-400 mb-6" data-i18n="modal.catalog_sub">Введите ваш номер Telegram или WhatsApp для моментальной получения PDF-каталога со всеми планировками.</p>
+            
+            <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <input type="tel" required placeholder="+998 __ ___ __ __" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                <button type="submit" class="w-full py-3.5 bg-gold text-obsidian font-bold text-xs uppercase tracking-widest rounded-lg hover:bg-gold-light">
+                    <span data-i18n="modal.btn_download">Получить PDF-каталог</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floor Plan Preview Modal -->
+    <div id="floorplan-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div class="glass-card max-w-2xl w-full p-6 sm:p-8 rounded-2xl relative border border-gold/40">
+            <button onclick="closeModal('floorplan-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 id="plan-modal-title" class="font-serif text-2xl text-white mb-1">Планировка резиденции</h3>
+            <p id="plan-modal-specs" class="text-xs text-gold mb-6">2-комнатная • 68.5 м² • Потолки 3.3м</p>
+
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 flex items-center justify-center min-h-[250px] mb-6">
+                <!-- SVG Floorplan Preview Graphic -->
+                <svg viewBox="0 0 400 300" class="w-full h-auto max-h-[280px] stroke-gold fill-none" stroke-width="1.5">
+                    <rect x="20" y="20" width="360" height="260" rx="4" stroke="#475569" stroke-width="2" />
+                    <!-- Rooms -->
+                    <rect x="30" y="30" width="180" height="150" />
+                    <text x="70" y="110" class="fill-slate-400 text-xs stroke-none" font-family="sans-serif">Гостиная / Living Room</text>
+                    
+                    <rect x="220" y="30" width="150" height="110" />
+                    <text x="250" y="80" class="fill-slate-400 text-xs stroke-none" font-family="sans-serif">Спальня / Bedroom</text>
+                    
+                    <rect x="220" y="150" width="150" height="120" />
+                    <text x="260" y="210" class="fill-slate-400 text-xs stroke-none" font-family="sans-serif">Кухня / Kitchen</text>
+
+                    <rect x="30" y="190" width="180" height="80" stroke-dasharray="4" />
+                    <text x="70" y="235" class="fill-gold text-xs stroke-none font-semibold" font-family="sans-serif">Балкон / Terrace</text>
+                </svg>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="closeModal('floorplan-modal'); openModal('callback-modal')" class="flex-1 py-3 bg-gold text-obsidian font-bold text-xs uppercase tracking-wider rounded-lg text-center hover:bg-gold-light">
+                    <span data-i18n="modal.inquire_plan">Забронировать планировку</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dictionary for Translations (RU / UZ)
+        const translations = {
+            ru: {
+                "nav.about": "О застройщике",
+                "nav.standards": "Стандарты",
+                "nav.residences": "Резиденции",
+                "nav.calculator": "Ипотека",
+                "nav.contact": "Контакты",
+                "nav.callback": "Заказать звонок",
+
+                "hero.tag": "Премиальная недвижимость • Ташкент",
+                "hero.title_part1": "Четыре стены.",
+                "hero.title_part2": "Бесконечные мгновения.",
+                "hero.subtitle": "Праздники, семейные вечера и тишина после рабочего дня — лучшие моменты жизни происходят дома. В GurBuilding мы создаем пространство, где эстетика встречается с инженерным совершенством.",
+                "hero.badge1_label": "Потолки",
+                "hero.badge2_label": "Рассрочка",
+                "hero.badge2_val": "0% до 24 мес",
+                "hero.badge3_label": "Срок сдачи",
+                "hero.badge3_val": "IV Квартал 2026",
+                "hero.cta_primary": "Выбрать резиденцию",
+                "hero.cta_secondary": "Скачать каталог (PDF)",
+
+                "standards.section_tag": "Философия качества",
+                "standards.title": "Дом, созданный именно таким, каким вы его представляли",
+                "pillar1.title": "Мастерство & Детали",
+                "pillar1.desc": "Утонченная отделка общественных зон, бесшумные премиальные лифты, увеличенные оконные проемы и продуманная шумоизоляция. Каждая резиденция GurBuilding — это баланс стиля и практичности.",
+                "pillar1.sub": "Crafted with Excellence",
+                "pillar2.title": "Идеальная локация",
+                "pillar2.desc": "Удобный выезд на ключевые магистрали Ташкента, близкое расположение лучших международных школ, деловых центров и парковых зон для комфортной жизни.",
+                "pillar2.sub": "Seamless Connectivity",
+                "pillar3.title": "Безопасная экосистема",
+                "pillar3.desc": "Приватный закрытый двор без автомобилей, подземный паркинг с лифтом прямо до вашего этажа, видеонаблюдение 24/7 и персональный консьерж-сервис.",
+                "pillar3.sub": "Complete Peace of Mind",
+
+                "residences.tag": "Коллекция жилья",
+                "residences.title": "Выбор резиденции",
+                "filter.all": "Все",
+                "filter.city": "City Residence",
+                "filter.retreats": "Nature Retreats",
+                "filter.penthouse": "Пентхаусы",
+
+                "calc.tag": "Финансовый калькулятор",
+                "calc.title": "Рассчитайте условия вашей рассрочки или ипотеки",
+                "calc.desc": "Мы предлагаем прозрачные финансовые инструменты: беспроцентную рассрочку от застройщика до 24 месяцев или выгодную ипотеку от банков-партнеров.",
+                "calc.notice": "Расчет является предварительным. Персональные скидки и акционные условия рассчитываются менеджером отдела продаж.",
+                "calc.label_price": "Стоимость недвижимости",
+                "calc.label_down": "Первоначальный взнос",
+                "calc.label_term": "Срок рассрочки / ипотеки",
+                "calc.months": "мес.",
+                "calc.monthly_payment": "Ежемесячный платеж",
+                "calc.total_financed": "Сумма рассрочки",
+                "calc.zero_percent": "0% Переплата за период",
+                "calc.get_plan": "Зафиксировать условия и получить консультацию",
+
+                "contact.tag": "Офис продаж",
+                "contact.title": "Прикоснитесь к качеству GurBuilding",
+                "contact.desc": "Запишитесь на приватную презентацию в нашем шоуруме. Наш эксперт подробно расскажет о доступных планировках, инфраструктуре и спецпредложениях.",
+                "contact.address_label": "Адрес офиса",
+                "contact.address_val": "г. Ташкент, Мирабадский р-н, ул. Афросиаб 12A",
+                "contact.phone_label": "Единый отдел продаж",
+                
+                "form.title": "Оставить заявку",
+                "form.name_label": "Ваше имя",
+                "form.phone_label": "Номер телефона",
+                "form.project_label": "Интересующий проект",
+                "form.opt_city": "GurBuilding City Residence",
+                "form.opt_nature": "GurBuilding Nature Retreats",
+                "form.opt_penthouse": "GurBuilding Penthouse Collection",
+                "form.submit": "Получить индивидуальное предложение",
+                "form.privacy": "Нажимая кнопку, вы соглашаетесь на обработку персональных данных.",
+
+                "footer.dev": "Разработано для премиального рынка недвижимости Узбекистана",
+
+                "modal.callback_title": "Заказать звонок",
+                "modal.callback_sub": "Оставьте ваши данные и наш эксперт свяжется с вами в течение 10 минут.",
+                "modal.btn_send": "Отправить",
+                "modal.catalog_title": "Скачать каталог 2026",
+                "modal.catalog_sub": "Введите ваш номер телефона для получения моментальной ссылки на PDF-каталог.",
+                "modal.btn_download": "Получить PDF-каталог",
+                "modal.inquire_plan": "Забронировать планировку"
+            },
+            uz: {
+                "nav.about": "Kompaniya haqida",
+                "nav.standards": "Standartlar",
+                "nav.residences": "Rezidensiyalar",
+                "nav.calculator": "Ipoteka",
+                "nav.contact": "Kontaktlar",
+                "nav.callback": "Qo‘ng‘iroq buyurtma",
+
+                "hero.tag": "Premium ko‘chmas mulk • Toshkent",
+                "hero.title_part1": "To‘rt devor.",
+                "hero.title_part2": "Cheksiz lahzalar.",
+                "hero.subtitle": "Bayramlar, oilaviy kechalar va osuda hordiq — hayotning eng go‘zal lahzalari uyda kechadi. GurBuilding’da biz estetika va muhandislik mukammalligi birlashgan makonni yaratamiz.",
+                "hero.badge1_label": "Shift balandligi",
+                "hero.badge2_label": "Muddatli to‘lov",
+                "hero.badge2_val": "0% 24 oyga",
+                "hero.badge3_label": "Topshirish muddati",
+                "hero.badge3_val": "IV Chorak 2026",
+                "hero.cta_primary": "Xonadon tanlash",
+                "hero.cta_secondary": "Katalogni yuklash (PDF)",
+
+                "standards.section_tag": "Sifat falsafasi",
+                "standards.title": "Siz har doim tasavvur qilganingizdek barpo etilgan uy",
+                "pillar1.title": "Mahorat & Detallar",
+                "pillar1.desc": "Umumiy hududlarning nafis pardozlanishi, shovqinsiz liftlar, kengaytirilgan darchalar va puxta shovqin izolyatsiyasi. Har bir rezidensiya — stil va amaliylik muvozanatidir.",
+                "pillar1.sub": "Crafted with Excellence",
+                "pillar2.title": "Mintaqaviy qulaylik",
+                "pillar2.desc": "Toshkentning asosiy magistral yo‘llariga tezkor chiqish, eng yaxshi xalqaro maktablar va biznes markazlariga yaqin joylashuv.",
+                "pillar2.sub": "Seamless Connectivity",
+                "pillar3.title": "Xavfsiz ekotizim",
+                "pillar3.desc": "Avtomobilsiz yopiq xavfsiz hovli, uyingiz qavatigacha chiquvchi yerosti avtoturargohi, 24/7 videokuzatuv va konsyerj-servis.",
+                "pillar3.sub": "Complete Peace of Mind",
+
+                "residences.tag": "Uylar kolleksiyasi",
+                "residences.title": "Rezidensiya tanlovi",
+                "filter.all": "Barchasi",
+                "filter.city": "City Residence",
+                "filter.retreats": "Nature Retreats",
+                "filter.penthouse": "Pentxauslar",
+
+                "calc.tag": "Moliyaviy kalkulyator",
+                "calc.title": "Muddatli to‘lov yoki ipoteka shartlarini hisoblang",
+                "calc.desc": "Biz shaffof moliyaviy imkoniyatlarni taklif etamiz: quruvchidan 24 oyga foizsiz muddatli to‘lov yoki hamkor banklardan ipoteka.",
+                "calc.notice": "Hisob-kitob dastlabki hisoblanadi. Shaxsiy chegirmalar sotuv bo‘limi menejeri tomonidan hisoblab beriladi.",
+                "calc.label_price": "Mulk qiymati",
+                "calc.label_down": "Boshlang‘ich to‘lov",
+                "calc.label_term": "To‘lov muddati",
+                "calc.months": "oy",
+                "calc.monthly_payment": "Oylik to‘lov",
+                "calc.total_financed": "Qoldiq summa",
+                "calc.zero_percent": "0% Ortiqcha to‘lov",
+                "calc.get_plan": "Shartlarni band qilish va konsultatsiya olish",
+
+                "contact.tag": "Sotuv bo‘limi",
+                "contact.title": "GurBuilding sifatini his eting",
+                "contact.desc": "Shourumimizda shaxsiy taqdimotga yoziling. Mutaxassisimiz mavjud planlar va maxsus takliflar haqida batafsil ma'lumot beradi.",
+                "contact.address_label": "Ofis manzili",
+                "contact.address_val": "Toshkent sh., Mirobod t., Afrosiyob ko‘chasi 12A",
+                "contact.phone_label": "Yagona sotuv bo‘limi",
+                
+                "form.title": "So‘rov qoldirish",
+                "form.name_label": "Ismingiz",
+                "form.phone_label": "Telefon raqamingiz",
+                "form.project_label": "Qiziqtirgan loyiha",
+                "form.opt_city": "GurBuilding City Residence",
+                "form.opt_nature": "GurBuilding Nature Retreats",
+                "form.opt_penthouse": "GurBuilding Penthouse Collection",
+                "form.submit": "Shaxsiy taklifni olish",
+                "form.privacy": "Tugmani bosish orqali shaxsiy ma'lumotlarni qayta ishlashga rozilik bildirasiz.",
+
+                "footer.dev": "O‘zbekiston premium ko‘chmas mulk bozori uchun ishlab chiqilgan",
+
+                "modal.callback_title": "Qo‘ng‘iroq buyurtma qilish",
+                "modal.callback_sub": "Ma'lumotlaringizni qoldiring, mutaxassisimiz 10 daqiqa ichida bog‘lanadi.",
+                "modal.btn_send": "Yuborish",
+                "modal.catalog_title": "Katalogni yuklash 2026",
+                "modal.catalog_sub": "PDF-katalogni olish uchun telefon raqamingizni kiriting.",
+                "modal.btn_download": "PDF-katalogni olish",
+                "modal.inquire_plan": "Rejani band qilish"
             }
-        });
+        };
+
+        let currentLang = 'ru';
+
+        // Residence Objects Data
+        const residencesData = [
+            {
+                id: 1,
+                category: 'city',
+                title: 'Urban Deluxe 2-Bed',
+                project: 'GurBuilding City Residence',
+                area: '68.5 m²',
+                rooms: '2 xonali / 2-комнатная',
+                floor: '4 / 14',
+                priceUSD: 85000,
+                img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 2,
+                category: 'city',
+                title: 'Grand Family Suite',
+                project: 'GurBuilding City Residence',
+                area: '104.2 m²',
+                rooms: '3 xonali / 3-комнатная',
+                floor: '8 / 14',
+                priceUSD: 135000,
+                img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 3,
+                category: 'retreats',
+                title: 'Villa Panorama',
+                project: 'GurBuilding Nature Retreats',
+                area: '185.0 m²',
+                rooms: '4 xonali / 4-комнатная',
+                floor: '1 / 2',
+                priceUSD: 210000,
+                img: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 4,
+                category: 'penthouse',
+                title: 'Sky Penthouse & Terrace',
+                project: 'GurBuilding Penthouse Collection',
+                area: '220.0 m²',
+                rooms: '5 xonali / Пентхаус',
+                floor: '14 / 14',
+                priceUSD: 295000,
+                img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 5,
+                category: 'city',
+                title: 'Compact Executive Studio',
+                project: 'GurBuilding City Residence',
+                area: '44.0 m²',
+                rooms: '1 xonali / 1-комнатная',
+                floor: '6 / 14',
+                priceUSD: 56000,
+                img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 6,
+                category: 'retreats',
+                title: 'Garden Residence',
+                project: 'GurBuilding Nature Retreats',
+                area: '142.0 m²',
+                rooms: '3 xonali / 3-комнатная',
+                floor: '1 / 3',
+                priceUSD: 165000,
+                img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80'
+            }
+        ];
+
+        // Language Switching Function
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Update Toggle Button UI
+            if (lang === 'ru') {
+                document.getElementById('lang-ru').className = "px-3 py-1 text-xs rounded-full font-semibold transition-all bg-gold text-obsidian shadow-sm";
+                document.getElementById('lang-uz').className = "px-3 py-1 text-xs rounded-full font-semibold transition-all text-slate-400 hover:text-white";
+            } else {
+                document.getElementById('lang-uz').className = "px-3 py-1 text-xs rounded-full font-semibold transition-all bg-gold text-obsidian shadow-sm";
+                document.getElementById('lang-ru').className = "px-3 py-1 text-xs rounded-full font-semibold transition-all text-slate-400 hover:text-white";
+            }
+
+            // Replace all DOM text elements with matching keys
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Recalculate Mortgage to update labels
+            calculateMortgage();
+        }
+
+        // Render Residences Grid
+        function renderResidences(filter = 'all') {
+            const grid = document.getElementById('residences-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? residencesData 
+                : residencesData.filter(r => r.category === filter);
+
+            filtered.forEach(res => {
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl overflow-hidden group border border-gold/20 gold-border-glow transition-all duration-300 flex flex-col justify-between";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="${res.img}" alt="${res.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+                            <span class="absolute top-4 left-4 bg-obsidian/80 backdrop-blur-md border border-gold/30 text-gold text-[10px] uppercase font-bold px-3 py-1 rounded-full">
+                                ${res.project}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl text-white font-semibold mb-2">${res.title}</h3>
+                            <div class="grid grid-cols-2 gap-3 text-xs text-slate-300 my-4 py-3 border-y border-slate-800">
+                                <div><span class="text-slate-500">Площадь / Maydoni:</span> <br><strong class="text-white">${res.area}</strong></div>
+                                <div><span class="text-slate-500">Этаж / Qavat:</span> <br><strong class="text-white">${res.floor}</strong></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-400">Стоимость / Narxi:</span>
+                                <span class="font-serif text-xl text-gold font-bold">$ ${res.priceUSD.toLocaleString()}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex gap-2">
+                        <button onclick="openFloorplanModal('${res.title}', '${res.area}')" class="flex-1 py-2.5 border border-gold/40 text-gold hover:bg-gold hover:text-obsidian rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors text-center">
+                            Планировка
+                        </button>
+                        <button onclick="openModal('callback-modal')" class="py-2.5 px-4 bg-gold text-obsidian hover:bg-gold-light rounded-lg text-xs font-bold uppercase transition-colors">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Re-initialize Lucide Icons for dynamic content
+            lucide.createIcons();
+        }
+
+        // Filter Residences Handler
+        function filterResidences(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if(btn.getAttribute('data-category') === category) {
+                    btn.className = "filter-btn active-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border border-gold bg-gold text-obsidian";
+                } else {
+                    btn.className = "filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border border-slate-700 text-slate-300 hover:border-gold hover:text-gold";
+                }
+            });
+            renderResidences(category);
+        }
+
+        // Interactive Mortgage Calculator Formula
+        function calculateMortgage() {
+            const price = parseInt(document.getElementById('input-price').value);
+            const downPercent = parseInt(document.getElementById('input-down').value);
+            const termMonths = parseInt(document.getElementById('input-term').value);
+
+            const downAmount = Math.round(price * (downPercent / 100));
+            const financedAmount = price - downAmount;
+            const monthlyPayment = Math.round(financedAmount / termMonths);
+            const monthlyUZS = Math.round(monthlyPayment * 12700); // UZS exchange rate approximation
+
+            // Update Labels
+            document.getElementById('val-price').textContent = '$ ' + price.toLocaleString();
+            document.getElementById('val-down-percent').textContent = downPercent;
+            document.getElementById('val-down-amount').textContent = '$ ' + downAmount.toLocaleString();
+            document.getElementById('val-term').textContent = termMonths;
+
+            document.getElementById('res-monthly').textContent = '$ ' + monthlyPayment.toLocaleString();
+            document.getElementById('res-monthly-uzs').textContent = '~ ' + monthlyUZS.toLocaleString() + ' UZS';
+            document.getElementById('res-financed').textContent = '$ ' + financedAmount.toLocaleString();
+        }
+
+        // Modal Handlers
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function openFloorplanModal(title, specs) {
+            document.getElementById('plan-modal-title').textContent = title;
+            document.getElementById('plan-modal-specs').textContent = specs + ' • Потолки 3.3м • VRV Климат';
+            openModal('floorplan-modal');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            alert(currentLang === 'ru' 
+                ? 'Спасибо! Ваша заявка принята. Менеджер отдела продаж GurBuilding свяжется с вами.' 
+                : 'Rahmat! Sorovingiz qabul qilindi. GurBuilding sotuv bo\'limi menejeri siz bilan bog\'lanadi.');
+            document.querySelectorAll('.fixed').forEach(m => m.classList.add('hidden'));
+        }
+
+        // Initial Load Event Listener
+        window.onload = function() {
+            lucide.createIcons();
+            renderResidences('all');
+            calculateMortgage();
+        };
     </script>
 </body>
 </html>
